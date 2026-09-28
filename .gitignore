@@ -1,0 +1,22 @@
+# Environment variables & secrets
+.env
+
+# Python build & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+
+# IDE files & logs
+.idea/
+.vscode/
+*.log
+
+# Scratch and reference documents
+*.pdf
+cleaned_problems.txt
+extracted_problems.txt
+].txt

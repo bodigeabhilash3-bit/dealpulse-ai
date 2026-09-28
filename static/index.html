@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealPulse AI — Autonomous Deal Intelligence Copilot</title>
+    <meta name="description" content="AI-powered deal intelligence copilot with persistent memory. Learns objection patterns, tracks multi-stakeholder dynamics, and coaches sales reps in real-time.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- App Container -->
+    <div id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <circle cx="14" cy="14" r="12" stroke="url(#logoGrad)" stroke-width="2.5"/>
+                            <path d="M9 14L12.5 17.5L19 11" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="14" cy="14" r="3" fill="url(#logoGrad)" opacity="0.3"/>
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+                                    <stop stop-color="#6C5CE7"/>
+                                    <stop offset="1" stop-color="#00D2FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="logo-text">DealPulse</h1>
+                        <span class="logo-badge">AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="dashboard" id="nav-dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="deals" id="nav-deals">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    <span>Deal Pipeline</span>
+                </a>
+                <a href="#" class="nav-item" data-view="coach" id="nav-coach">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Objection Coach</span>
+                </a>
+                <a href="#" class="nav-item" data-view="memory" id="nav-memory">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    <span>Memory Inspector</span>
+                </a>
+                <a href="#" class="nav-item" data-view="ingest" id="nav-ingest">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Ingest Call</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="memory-status" id="memory-status">
+                    <div class="memory-dot"></div>
+                    <span>Hindsight Memory</span>
+                </div>
+                <div class="memory-count" id="memory-count">Loading...</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div class="view active" id="view-dashboard">
+                <div class="view-header">
+                    <div>
+                        <h2 class="view-title">Deal Intelligence Dashboard</h2>
+                        <p class="view-subtitle">Real-time pipeline health powered by Hindsight memory</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="pulse-indicator">
+                            <div class="pulse-dot"></div>
+                            <span>Live Memory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-card-primary">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Total Pipeline</span>
+                            <span class="stat-value" id="stat-pipeline">$0</span>
+                        </div>
+                        <div class="stat-trend stat-trend-up">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Active Deals</span>
+                            <span class="stat-value" id="stat-deals">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-emerald">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Memories Stored</span>
+                            <span class="stat-value" id="stat-memories">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-amber">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Calls Analyzed</span>
+                            <span class="stat-value" id="stat-calls">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Cards -->
+                <h3 class="section-title">Active Deals</h3>
+                <div class="deals-grid" id="dashboard-deals"></div>
+            </div>
+
+            <!-- Deal Pipeline View -->
+            <div class="view" id="view-deals">
+                <div class="view-header">
+                    <div>
+                        <h2 class="view-title">Deal Pipeline</h2>
+                        <p class="view-subtitle">Track every deal across stages with memory-powered health scores</p>
+                    </div>
+                </div>
+                <div class="pipeline-board" id="pipeline-board"></div>
+            </div>
+
+            <!-- Objection Coach View -->
+            <div class="view" id="view-coach">
+                <div class="view-header">
+                    <div>
+                        <h2 class="view-title">🧠 Objection Coach</h2>
+                        <p class="view-subtitle">AI-powered objection handling with full deal memory recall</p>
+                    </div>
+                </div>
+
+                <div class="coach-layout">
+                    <div class="coach-input-panel">
+                        <div class="glass-card">
+                            <h3 class="card-title">Describe the Objection</h3>
+                            <div class="form-group">
+                                <label class="form-label">Select Deal</label>
+                                <select class="form-select" id="coach-deal-select">
+                                    <option value="">Choose a deal...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Stakeholder Role</label>
+                                <select class="form-select" id="coach-role">
+                                    <option value="">Select role...</option>
+                                    <option value="CEO">CEO</option>
+                                    <option value="CTO">CTO</option>
+                                    <option value="CFO">CFO</option>
+                                    <option value="VP of Engineering">VP of Engineering</option>
+                                    <option value="VP of Sales">VP of Sales</option>
+                                    <option value="Head of IT">Head of IT</option>
+                                    <option value="Procurement">Procurement</option>
+                                    <option value="End User">End User</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">The Objection</label>
+                                <textarea class="form-textarea" id="coach-objection" placeholder='e.g., "Your price is 2x what we currently pay. Our CFO won&apos;t approve this budget."' rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Additional Context (optional)</label>
+                                <textarea class="form-textarea" id="coach-context" placeholder="Any additional context about the situation..." rows="2"></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-full" id="coach-submit" onclick="submitObjection()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83"/></svg>
+                                Analyze with Memory Recall
+                            </button>
+                        </div>
+
+                        <!-- Quick Objections -->
+                        <div class="glass-card">
+                            <h3 class="card-title">⚡ Quick Objections</h3>
+                            <div class="quick-objections">
+                                <button class="chip" onclick="quickObjection('Your price is 2x our current spend')">💰 Price too high</button>
+                                <button class="chip" onclick="quickObjection('We need to see ROI within 90 days')">📊 ROI timeline</button>
+                                <button class="chip" onclick="quickObjection('A competitor offered us a 40% discount')">🏷️ Competitor discount</button>
+                                <button class="chip" onclick="quickObjection('We need SOC2 compliance before we can proceed')">🔒 Compliance blocker</button>
+                                <button class="chip" onclick="quickObjection('We need to check with our legal team first')">⚖️ Legal review</button>
+                                <button class="chip" onclick="quickObjection('We are not sure about the migration risk')">⚠️ Migration risk</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="coach-response-panel">
+                        <div class="glass-card" id="coach-response-card">
+                            <div class="empty-state" id="coach-empty">
+                                <div class="empty-icon">🧠</div>
+                                <h3>Ready to Coach</h3>
+                                <p>Select a deal, type an objection, and DealPulse AI will recall all relevant memories to craft the perfect response.</p>
+                                <div class="memory-badges">
+                                    <span class="memory-badge">📁 Deal History</span>
+                                    <span class="memory-badge">📖 Playbook</span>
+                                    <span class="memory-badge">⚔️ Competitive Intel</span>
+                                </div>
+                            </div>
+                            <div class="coach-loading" id="coach-loading" style="display:none">
+                                <div class="loading-brain">
+                                    <div class="brain-pulse"></div>
+                                    <div class="brain-icon">🧠</div>
+                                </div>
+                                <p>Searching Hindsight memory banks...</p>
+                                <div class="loading-steps" id="loading-steps">
+                                    <div class="loading-step active">Recalling deal history...</div>
+                                    <div class="loading-step">Searching playbook patterns...</div>
+                                    <div class="loading-step">Checking competitive intel...</div>
+                                    <div class="loading-step">Synthesizing response...</div>
+                                </div>
+                            </div>
+                            <div class="coach-result" id="coach-result" style="display:none">
+                                <div class="result-header">
+                                    <h3>🎯 AI Coach Response</h3>
+                                    <div class="memory-used" id="memory-used-count"></div>
+                                </div>
+                                <div class="result-content" id="coach-result-content"></div>
+                                <div class="memory-sources" id="memory-sources"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Inspector View -->
+            <div class="view" id="view-memory">
+                <div class="view-header">
+                    <div>
+                        <h2 class="view-title">🔍 Hindsight Memory Inspector</h2>
+                        <p class="view-subtitle">Explore what DealPulse AI remembers across all deals</p>
+                    </div>
+                </div>
+
+                <div class="memory-layout">
+                    <!-- Memory Search -->
+                    <div class="glass-card">
+                        <h3 class="card-title">Search Memory</h3>
+                        <div class="memory-search-bar">
+                            <input type="text" class="form-input" id="memory-search-input" placeholder="Search memories... e.g., 'CFO objections about pricing'">
+                            <select class="form-select form-select-small" id="memory-bank-select">
+                                <option value="dealpulse-deals">Deal History</option>
+                                <option value="dealpulse-playbook">Playbook</option>
+                                <option value="dealpulse-competitors">Competitive Intel</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="searchMemory()">Search</button>
+                        </div>
+                        <div id="memory-search-results"></div>
+                    </div>
+
+                    <!-- Memory Timeline -->
+                    <div class="glass-card">
+                        <h3 class="card-title">📅 Episodic Memory Timeline</h3>
+                        <select class="form-select" id="timeline-deal-select" onchange="loadTimeline()">
+                            <option value="">Select a deal...</option>
+                        </select>
+                        <div class="timeline" id="memory-timeline"></div>
+                    </div>
+
+                    <!-- Memory Banks Stats -->
+                    <div class="memory-banks-grid">
+                        <div class="memory-bank-card" id="bank-deals">
+                            <div class="bank-icon">📁</div>
+                            <h4>Deal History</h4>
+                            <div class="bank-count" id="bank-deals-count">0</div>
+                            <p>Call transcripts, stakeholder interactions, deal context</p>
+                        </div>
+                        <div class="memory-bank-card" id="bank-playbook">
+                            <div class="bank-icon">📖</div>
+                            <h4>Playbook</h4>
+                            <div class="bank-count" id="bank-playbook-count">0</div>
+                            <p>Learned objection patterns, winning tactics, strategies</p>
+                        </div>
+                        <div class="memory-bank-card" id="bank-competitors">
+                            <div class="bank-icon">⚔️</div>
+                            <h4>Competitive Intel</h4>
+                            <div class="bank-count" id="bank-competitors-count">0</div>
+                            <p>Competitor strengths, weaknesses, counter-strategies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingest Call View -->
+            <div class="view" id="view-ingest">
+                <div class="view-header">
+                    <div>
+                        <h2 class="view-title">📞 Ingest Call Transcript</h2>
+                        <p class="view-subtitle">Add a new call to a deal — watch memory update in real-time</p>
+                    </div>
+                </div>
+
+                <div class="ingest-layout">
+                    <div class="glass-card">
+                        <h3 class="card-title">New Call Transcript</h3>
+                        <div class="form-group">
+                            <label class="form-label">Deal</label>
+                            <select class="form-select" id="ingest-deal-select">
+                                <option value="">Choose a deal...</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Stakeholder Name</label>
+                                <input type="text" class="form-input" id="ingest-stakeholder" placeholder="e.g., Sarah Chen">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Role</label>
+                                <select class="form-select" id="ingest-role">
+                                    <option value="CEO">CEO</option>
+                                    <option value="CTO">CTO</option>
+                                    <option value="CFO">CFO</option>
+                                    <option value="VP of Engineering">VP of Engineering</option>
+                                    <option value="Head of IT">Head of IT</option>
+                                    <option value="Procurement">Procurement</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Call Transcript / Summary</label>
+                            <textarea class="form-textarea" id="ingest-transcript" rows="6" placeholder="Paste the call transcript or write a summary..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Objections Raised (comma-separated)</label>
+                            <input type="text" class="form-input" id="ingest-objections" placeholder="e.g., Price too high, Timeline concern">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Competitors Mentioned (comma-separated)</label>
+                            <input type="text" class="form-input" id="ingest-competitors" placeholder="e.g., Salesforce, HubSpot">
+                        </div>
+                        <button class="btn btn-primary btn-full" onclick="ingestCall()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            Ingest & Store in Memory
+                        </button>
+                    </div>
+
+                    <div class="glass-card" id="ingest-result" style="display:none">
+                        <div class="success-animation">
+                            <div class="success-icon">✅</div>
+                            <h3>Call Ingested Successfully</h3>
+                            <div id="ingest-result-details"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Deal Detail Modal -->
+    <div class="modal-overlay" id="deal-modal" style="display:none">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="deal-modal-content"></div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
