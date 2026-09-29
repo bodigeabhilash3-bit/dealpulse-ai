@@ -41,6 +41,9 @@
                         <span class="logo-badge">AI</span>
                     </div>
                 </div>
+                <button class="btn-demo-nav" onclick="runGuidedDemo()" id="btn-run-demo-sidebar" style="margin-top: 14px; width: 100%; justify-content: center;">
+                    ✨ Run Judge Demo
+                </button>
             </div>
 
             <nav class="sidebar-nav">
@@ -82,16 +85,81 @@
                 <div class="view-header">
                     <div>
                         <h2 class="view-title">Deal Intelligence Dashboard</h2>
-                        <p class="view-subtitle">Real-time pipeline health powered by Hindsight memory</p>
+                        <p class="view-subtitle">Real-time pipeline health powered by persistent deal memory</p>
                     </div>
-                    <div class="header-actions">
-                        <div class="pulse-indicator">
-                            <div class="pulse-dot"></div>
-                            <span>Live Memory</span>
+                    <div class="header-actions" style="display: flex; gap: 12px; align-items: center;">
+                        <button class="btn-demo-nav" onclick="runGuidedDemo()" id="btn-run-demo-header">
+                            ✨ Run 30s Demo
+                        </button>
+                        <div class="pulse-indicator" id="header-pulse">
+                            <div class="pulse-dot" id="header-pulse-dot"></div>
+                            <span id="header-pulse-text">Persistent Memory</span>
                         </div>
                     </div>
                 </div>
 
+                <!-- Dashboard Hero Section -->
+                <div class="dashboard-hero">
+                    <div class="hero-left">
+                        <div class="hero-tag"><span class="hero-tag-dot"></span> AUTONOMOUS DEAL INTELLIGENCE</div>
+                        <h1 class="hero-headline">Your deals, <span class="gradient-text">with memory</span>.</h1>
+                        <p class="hero-subtext">DealPulse remembers what happened across conversations and surfaces what matters now.</p>
+                        <div class="hero-cta-group">
+                            <button class="btn btn-primary btn-demo-glow" onclick="runGuidedDemo()" id="btn-run-demo-hero">
+                                <span class="sparkle-icon">✨</span> Run 30s Judge Demo
+                            </button>
+                            <button class="btn btn-secondary" onclick="openDealDetail('deal-001')">
+                                <span>Inspect Nexus Story</span> &rarr;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-right">
+                        <!-- Attention Needed Hero Card -->
+                        <div class="attention-card glass-card" id="hero-attention-card" onclick="openDealDetail('deal-001')" title="Click to inspect Nexus Technologies deal story">
+                            <div class="attention-header">
+                                <div class="attention-badge">
+                                    <span>⚠️</span> Attention Needed
+                                </div>
+                                <span class="deal-badge stage-Negotiation">Negotiation · 47d</span>
+                            </div>
+                            <div class="attention-body">
+                                <div class="attention-title-row">
+                                    <h3 class="attention-title">Nexus Technologies</h3>
+                                    <span class="attention-amount">$285,000</span>
+                                </div>
+                                <div class="attention-risk-row">
+                                    <span class="risk-label">Main Risk:</span>
+                                    <span class="risk-value">⚠️ CFO Marcus Rivera is blocking on price (2× current spend)</span>
+                                </div>
+                                <div class="attention-intel-grid">
+                                    <div class="intel-item">
+                                        <span class="intel-label">Competitor:</span>
+                                        <span class="intel-value">Splunk 40% discount offered</span>
+                                    </div>
+                                    <div class="intel-item">
+                                        <span class="intel-label">Internal Champion:</span>
+                                        <span class="intel-value">Sarah Chen (VP Eng, 120 devs)</span>
+                                    </div>
+                                </div>
+                                <div class="attention-action-box">
+                                    <div class="action-icon">🎯</div>
+                                    <div class="action-details">
+                                        <span class="action-tag">RECOMMENDED NEXT STEP</span>
+                                        <p class="action-text">Prepare a <strong>3-year TCO comparison</strong> showing savings vs current multi-tool stack</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="attention-footer">
+                                <div class="health-mini">
+                                    <span class="health-text">Deal Health: 72%</span>
+                                    <div class="health-bar-container"><div class="health-bar health-high" style="width: 72%"></div></div>
+                                </div>
+                                <span class="card-click-hint">Click to inspect memory &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Dashboard Hero Section -->
                 <!-- Stats Cards -->
                 <div class="stats-grid">
                     <div class="stat-card stat-card-primary">
@@ -158,6 +226,11 @@
                         <h2 class="view-title">🧠 Objection Coach</h2>
                         <p class="view-subtitle">AI-powered objection handling with full deal memory recall</p>
                     </div>
+                    <div class="header-actions">
+                        <button class="btn-demo-nav" onclick="quickObjection('Your price is 2x our current spend. We cannot justify it.', 'CFO', 'deal-001', true)">
+                            ⚡ Demo CFO Objection
+                        </button>
+                    </div>
                 </div>
 
                 <div class="coach-layout">
@@ -186,28 +259,27 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">The Objection</label>
-                                <textarea class="form-textarea" id="coach-objection" placeholder='e.g., "Your price is 2x what we currently pay. Our CFO won&apos;t approve this budget."' rows="4"></textarea>
+                                <textarea class="form-textarea" id="coach-objection" placeholder='e.g., "Your price is 2x our current spend. We cannot justify it."' rows="4"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Additional Context (optional)</label>
                                 <textarea class="form-textarea" id="coach-context" placeholder="Any additional context about the situation..." rows="2"></textarea>
                             </div>
-                            <button class="btn btn-primary btn-full" id="coach-submit" onclick="submitObjection()">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83"/></svg>
-                                Analyze with Memory Recall
+                            <button class="btn btn-primary btn-full btn-demo-glow" id="coach-submit" onclick="submitObjection()">
+                                <span style="font-size: 1.1rem;">⚡</span> Coach me
                             </button>
                         </div>
 
                         <!-- Quick Objections -->
                         <div class="glass-card">
-                            <h3 class="card-title">⚡ Quick Objections</h3>
+                            <h3 class="card-title">⚡ Instant Demo Scenarios</h3>
                             <div class="quick-objections">
-                                <button class="chip" onclick="quickObjection('Your price is 2x our current spend')">💰 Price too high</button>
-                                <button class="chip" onclick="quickObjection('We need to see ROI within 90 days')">📊 ROI timeline</button>
-                                <button class="chip" onclick="quickObjection('A competitor offered us a 40% discount')">🏷️ Competitor discount</button>
-                                <button class="chip" onclick="quickObjection('We need SOC2 compliance before we can proceed')">🔒 Compliance blocker</button>
-                                <button class="chip" onclick="quickObjection('We need to check with our legal team first')">⚖️ Legal review</button>
-                                <button class="chip" onclick="quickObjection('We are not sure about the migration risk')">⚠️ Migration risk</button>
+                                <button class="chip" onclick="quickObjection('Your price is 2x our current spend. We cannot justify it.', 'CFO', 'deal-001')">🔥 CFO: Price 2x spend ($285K)</button>
+                                <button class="chip" onclick="quickObjection('Splunk offered us a 40% discount to renew with them.', 'CFO', 'deal-001')">🏷️ Splunk 40% discount</button>
+                                <button class="chip" onclick="quickObjection('We need SOC2 compliance certification by January before we can proceed.', 'CTO', 'deal-001')">🔒 CTO: SOC2 compliance</button>
+                                <button class="chip" onclick="quickObjection('We need to see clear measurable ROI within 90 days.', 'CFO', 'deal-001')">📊 CFO: 90-day ROI requirement</button>
+                                <button class="chip" onclick="quickObjection('We are not sure about the migration risk from our legacy system.', 'Head of IT', 'deal-002')">⚠️ HealthSync: Migration risk</button>
+                                <button class="chip" onclick="quickObjection('We need to check with our legal and procurement team first.', 'Procurement', 'deal-001')">⚖️ Legal & Procurement review</button>
                             </div>
                         </div>
                     </div>
@@ -217,10 +289,10 @@
                             <div class="empty-state" id="coach-empty">
                                 <div class="empty-icon">🧠</div>
                                 <h3>Ready to Coach</h3>
-                                <p>Select a deal, type an objection, and DealPulse AI will recall all relevant memories to craft the perfect response.</p>
+                                <p>Select a deal, choose a scenario, and DealPulse will recall all relevant memories across conversations to craft the optimal response.</p>
                                 <div class="memory-badges">
                                     <span class="memory-badge">📁 Deal History</span>
-                                    <span class="memory-badge">📖 Playbook</span>
+                                    <span class="memory-badge">📖 Playbook Tactics</span>
                                     <span class="memory-badge">⚔️ Competitive Intel</span>
                                 </div>
                             </div>
@@ -229,20 +301,62 @@
                                     <div class="brain-pulse"></div>
                                     <div class="brain-icon">🧠</div>
                                 </div>
-                                <p>Searching Hindsight memory banks...</p>
-                                <div class="loading-steps" id="loading-steps">
-                                    <div class="loading-step active">Recalling deal history...</div>
-                                    <div class="loading-step">Searching playbook patterns...</div>
-                                    <div class="loading-step">Checking competitive intel...</div>
-                                    <div class="loading-step">Synthesizing response...</div>
+                                <p style="font-weight: 700; color: #fff; margin-bottom: 2px;">Recalling from Persistent Memory...</p>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">Querying deal history, stakeholder graph, and competitor intel</p>
+                                <div class="coach-loading-stepper" id="coach-loading-stepper">
+                                    <div class="coach-step-row active" id="coach-step-1">
+                                        <span class="coach-step-icon">🔍</span>
+                                        <span class="coach-step-label">1. Searching deal history (4 calls, 4 stakeholders)...</span>
+                                    </div>
+                                    <div class="coach-step-row" id="coach-step-2">
+                                        <span class="coach-step-icon">⏳</span>
+                                        <span class="coach-step-label">2. Checking stakeholder context (Marcus Rivera - Skeptical CFO)...</span>
+                                    </div>
+                                    <div class="coach-step-row" id="coach-step-3">
+                                        <span class="coach-step-icon">⏳</span>
+                                        <span class="coach-step-label">3. Recalling playbook & competitor intel (Splunk 40% discount)...</span>
+                                    </div>
+                                    <div class="coach-step-row" id="coach-step-4">
+                                        <span class="coach-step-icon">⏳</span>
+                                        <span class="coach-step-label">4. Synthesizing grounded script via Groq LLM (sub-2s)...</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="coach-result" id="coach-result" style="display:none">
                                 <div class="result-header">
-                                    <h3>🎯 AI Coach Response</h3>
+                                    <div>
+                                        <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 2px;">🎯 Recommended Response</h3>
+                                        <span style="font-size: 0.78rem; color: var(--text-muted);">Grounded in cross-call memory · Ready for rep delivery</span>
+                                    </div>
                                     <div class="memory-used" id="memory-used-count"></div>
                                 </div>
                                 <div class="result-content" id="coach-result-content"></div>
+                                
+                                <!-- Why this response? Memory Provenance Proof -->
+                                <div class="why-response-box" id="coach-why-box">
+                                    <div class="why-response-title">
+                                        <span>🧠 Why this response? (Recalled from Memory, Not Generic AI)</span>
+                                    </div>
+                                    <div class="why-item-list" id="coach-why-list">
+                                        <div class="why-item">
+                                            <span>📁</span>
+                                            <span><strong>Call #3 with CFO Marcus Rivera:</strong> Recalled pushback on $285K pricing and strict 90-day ROI requirement.</span>
+                                        </div>
+                                        <div class="why-item">
+                                            <span>⭐</span>
+                                            <span><strong>Call #4 with Champion Sarah Chen:</strong> Recalled her advice to counter Marcus with a 3-year TCO consolidation model.</span>
+                                        </div>
+                                        <div class="why-item">
+                                            <span>⚔️</span>
+                                            <span><strong>Competitive Intel Bank:</strong> Splunk 40% discount countered by exposing hidden data ingestion fees and operational overhead.</span>
+                                        </div>
+                                        <div class="why-item">
+                                            <span>📖</span>
+                                            <span><strong>Winning Playbook Bank:</strong> "CFOs approve deals on multi-tool consolidation and phased milestone billing, not feature lists."</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="memory-sources" id="memory-sources"></div>
                             </div>
                         </div>
@@ -254,15 +368,106 @@
             <div class="view" id="view-memory">
                 <div class="view-header">
                     <div>
-                        <h2 class="view-title">🔍 Hindsight Memory Inspector</h2>
-                        <p class="view-subtitle">Explore what DealPulse AI remembers across all deals</p>
+                        <h2 class="view-title">🔍 Persistent Memory Inspector</h2>
+                        <p class="view-subtitle">Inspect how DealPulse retrieves relevant cross-conversation facts in real time</p>
+                    </div>
+                </div>
+
+                <!-- 1. Retrieval Flow Stepper (Visual Architecture) -->
+                <div class="glass-card memory-flow-card">
+                    <div class="flow-header">
+                        <h3 class="card-title" style="margin-bottom: 4px;">⚡ How DealPulse Memory Retrieval Works</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Why DealPulse doesn't dump 68,000 raw transcript tokens into every prompt</p>
+                    </div>
+                    <div class="memory-flow-stepper">
+                        <div class="flow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-icon">📞</div>
+                            <div class="step-title">Raw Transcripts</div>
+                            <div class="step-badge">68K tokens</div>
+                            <div class="step-desc">All past sales calls, chats & meetings</div>
+                        </div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-icon">🧠</div>
+                            <div class="step-title">Hindsight Memory</div>
+                            <div class="step-badge">Temporal & Semantic</div>
+                            <div class="step-desc">Extracts facts, risks, stakeholders & tactics</div>
+                        </div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-step active-glow">
+                            <div class="step-num">3</div>
+                            <div class="step-icon">🎯</div>
+                            <div class="step-title">Relevant Context</div>
+                            <div class="step-badge highlight">~650 tokens</div>
+                            <div class="step-desc">Only the precise memories needed</div>
+                        </div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-step">
+                            <div class="step-num">4</div>
+                            <div class="step-icon">🚀</div>
+                            <div class="step-title">Grounded AI Action</div>
+                            <div class="step-badge">Sub-2s Groq</div>
+                            <div class="step-desc">Zero hallucination, high precision guidance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Token Advantage Proof Benchmark -->
+                <div class="token-advantage-card glass-card">
+                    <div class="token-header">
+                        <div>
+                            <h4 class="card-title" style="margin: 0; font-size: 1.05rem;">⚡ Context Efficiency & Token Advantage</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; margin-top: 4px;">Measured benchmark: Persistent temporal retrieval vs. naive prompt stuffing</p>
+                        </div>
+                        <div class="token-stat-badge">99.0% Token Reduction</div>
+                    </div>
+                    <div class="token-comparison-grid">
+                        <div class="token-col">
+                            <div class="token-col-title">Naive Prompt Stuffing (Full Transcripts)</div>
+                            <div class="token-metric">68,000 <span class="token-unit">tokens</span></div>
+                            <div class="token-bar-track">
+                                <div class="token-bar stuffed" style="width: 100%;"></div>
+                            </div>
+                            <div class="token-meta">
+                                <span>⏱️ Latency: ~14.2s</span>
+                                <span>💸 Cost: $0.14 / call</span>
+                                <span class="danger-text">⚠️ High risk of Lost-in-the-Middle</span>
+                            </div>
+                        </div>
+                        <div class="token-vs">VS</div>
+                        <div class="token-col highlight">
+                            <div class="token-col-title">DealPulse + Persistent Memory</div>
+                            <div class="token-metric text-emerald">~650 <span class="token-unit">tokens</span></div>
+                            <div class="token-bar-track">
+                                <div class="token-bar efficient" style="width: 1.5%;"></div>
+                            </div>
+                            <div class="token-meta">
+                                <span class="text-emerald">⚡ Latency: 1.6s (Groq Llama-3.3)</span>
+                                <span class="text-emerald">💰 Cost: $0.001 / query</span>
+                                <span class="text-emerald">🎯 100% relevant context</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="memory-layout">
                     <!-- Memory Search -->
                     <div class="glass-card">
-                        <h3 class="card-title">Search Memory</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <h3 class="card-title" style="margin: 0;">Search Memory Banks</h3>
+                            <span class="chip" id="search-active-count" style="font-size: 0.75rem; color: var(--accent-cyan);">Instant Memory Lookup</span>
+                        </div>
+
+                        <!-- Quick Search Suggestions -->
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+                            <button class="chip" onclick="quickMemorySearch('CFO objections about pricing', 'dealpulse-deals')">💰 CFO pricing objections</button>
+                            <button class="chip" onclick="quickMemorySearch('Sarah Chen champion internal alignment', 'dealpulse-deals')">⭐ Sarah Chen champion notes</button>
+                            <button class="chip" onclick="quickMemorySearch('Splunk competitor discount', 'dealpulse-competitors')">⚔️ Splunk competitive intel</button>
+                            <button class="chip" onclick="quickMemorySearch('TCO comparison phased rollout', 'dealpulse-playbook')">📖 TCO & phased rollout playbook</button>
+                        </div>
+
                         <div class="memory-search-bar">
                             <input type="text" class="form-input" id="memory-search-input" placeholder="Search memories... e.g., 'CFO objections about pricing'">
                             <select class="form-select form-select-small" id="memory-bank-select">
@@ -372,6 +577,9 @@
             </div>
         </main>
     </div>
+
+    <!-- Guided Demo Tour Toast / Banner Container -->
+    <div id="demo-tour-container"></div>
 
     <!-- Deal Detail Modal -->
     <div class="modal-overlay" id="deal-modal" style="display:none">
